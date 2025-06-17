@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <script src="node_modules/@microsoft/signalr/dist/browser/signalr.js"></script>
+    <title>This is a iFrame</title>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            background: #fff;
+        }
+    </style>
+    </head>
+    <body>
+        <h1>This is an iFrame</h1>
+        <p>It is used to demonstrate the layout helpers in reveal.js.</p>
+        <p>Resize the window to see how it behaves.</p>
+        <p>Click the button below to close this iFrame.</p>
+    </body>
+
+<script>
+    // Wacht tot de pagina geladen is
+    document.addEventListener("DOMContentLoaded", function () {
+        // Maak een connectie naar de hub (URL hangt af van je backend)
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://iwantfireworks.azurewebsites.net/notificationFireworkHub") // zorg dat dit klopt met je backend route
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        // Luister naar een bericht van de server
+        connection.on("ReceiveNotification", function (message) {
+            console.log("Ontvangen bericht:", message);
+            // Je kunt hier alles mee doen, bijvoorbeeld in de UI tonen
+            alert("Nieuw bericht: " + message);
+        });
+
+        // Verbind met de hub
+        connection.start().then(function () {
+            console.log("SignalR verbonden!");
+        }).catch(function (err) {
+            return console.error("Fout bij verbinden met SignalR:", err.toString());
+        });
+    });
+</script>
+</html>
