@@ -29,11 +29,9 @@
             .build();
 
         // Luister naar een bericht van de server
-        connection.on("ReceiveNotification", function (message) {
-            console.log("Ontvangen bericht:", message);
-            // Je kunt hier alles mee doen, bijvoorbeeld in de UI tonen
-            alert("Nieuw bericht: " + message);
-        });
+        connection.on('receivemessage', (msg)=>{
+            console.log('Bericht ontvangen van de server');
+        })
 
         // Verbind met de hub
         connection.start().then(function () {
