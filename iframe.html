@@ -5,12 +5,12 @@
     <script src="node_modules/@microsoft/signalr/dist/browser/signalr.js"></script>
     <title>This is a iFrame</title>
     <style>
-        html, body {
-            margin: 0;
-            height: 100%;
-            width: 100%;
-            background: #fff;
-        }
+    html, body {
+         margin: 0;
+         height: 100%;
+         width: 100%;
+         background: #fff;
+    }
 
     .rocket {
         position: absolute;
@@ -24,15 +24,13 @@
         position: absolute;
         border-radius: 50%;
         background: radial-gradient(circle, red, yellow, transparent);
-        opacity: 0.8;
+        opacity: 0.9;
     }
 </style>
     </head>
     <body>
-        <h1>This is an iFrame</h1>
-        <p>It is used to demonstrate the layout helpers in reveal.js.</p>
-        <p>Resize the window to see how it behaves.</p>
-        <p>Click the button below to close this iFrame.</p>
+    <div style="width: 200px; height:500px;"><img style="max-width: 100%; height: auto;"src="assets/img/qrcode.png" alt="qrcode" /> </div>
+        <div>fireworks</div>
     </body>
 
 <script>
@@ -72,11 +70,15 @@
 
         function explode(x, y) {
             // Play firework sound
-            const audio = new Audio('/audio/vuurwerk.mp3');
+            const audio = new Audio('assets/audio/vuurwerk.mp3');
             audio.play().catch((err) => {
                 console.error("Fout bij het afspelen van het geluid:", err);
             });
 
+            // math color between 120 and 255
+            const red = Math.floor(Math.random() * 136) + 120; // Rood tussen 120 en 255
+            const green = Math.floor(Math.random() * 136) + 120; // Groen tussen 120 en 255
+            const blue = Math.floor(Math.random() * 136) + 120; // Blauw tussen 120 en 255
             for (let i = 0; i < 10; i++) {
                 const explosion = document.createElement('div');
                 explosion.className = 'explosion';
@@ -85,6 +87,11 @@
                 explosion.style.height = `${size}px`;
                 explosion.style.left = `${x - size/2}px`;
                 explosion.style.top = `${y - size/2}px`;
+
+                const rgbColor = `rgb(${red}, ${green}, ${blue})`;
+                explosion.style.background = `radial-gradient(circle, ${rgbColor}, ${rgbColor}, transparent)`;
+                // explosion.style.background: `radial-gradient(circle, red, yellow, transparent)`;
+
                 document.body.appendChild(explosion);
 
                 // animatie
