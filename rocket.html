@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vuurpijl</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+        }
+
+        .rocket {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            height: 20px;
+            background: white;
+        }
+
+        .explosion {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, red, yellow, transparent);
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    function launchRocket() {
+        const rocket = document.createElement('div');
+        rocket.className = 'rocket';
+        document.body.appendChild(rocket);
+
+        const maxHeight = Math.random() * (window.innerHeight * 0.5) + (window.innerHeight * 0.3); // random tussen 30%-80% van schermhoogte
+        const duration = 1500; // 1.5s animatie
+        const start = performance.now();
+
+        function animateRocket(time) {
+            const elapsed = time - start;
+            const progress = Math.min(elapsed / duration, 1);
+            rocket.style.bottom = `${progress * maxHeight}px`;
+
+            if (progress < 1) {
+                requestAnimationFrame(animateRocket);
+            } else {
+                explode(rocket.offsetLeft, rocket.offsetTop);
+                rocket.remove();
+            }
+        }
+
+        requestAnimationFrame(animateRocket);
+    }
+
+    function explode(x, y) {
+        for (let i = 0; i < 10; i++) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            const size = Math.random() * 20 + 10;
+            explosion.style.width = `${size}px`;
+            explosion.style.height = `${size}px`;
+            explosion.style.left = `${x - size/2}px`;
+            explosion.style.top = `${y - size/2}px`;
+            document.body.appendChild(explosion);
+
+            // animatie
+            setTimeout(() => {
+                explosion.style.transition = 'transform 0.5s ease-out, opacity 0.5s';
+                explosion.style.transform = `translate(${Math.random()*100 - 50}px, ${Math.random()*100 - 50}px) scale(0.5)`;
+                explosion.style.opacity = '0';
+            }, 10);
+
+            // verwijderen na animatie
+            setTimeout(() => {
+                explosion.remove();
+            }, 600);
+        }
+    }
+
+    // Start automatisch een paar vuurpijlen achter elkaar
+    setInterval(launchRocket, 2000);
+</script>
+
+</body>
+</html>
