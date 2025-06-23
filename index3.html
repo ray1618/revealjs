@@ -18,6 +18,80 @@
 		<div class="reveal">
 
 			<div class="slides">
+				<section>
+					<h3>Chrome build in Gemini Nano</h3>
+					<ul>
+						<li>Wat kan je er mee doen</li>
+						<li>Waarom</li>
+						<li>Nadelen</li>
+					</ul>
+					<aside class="notes">
+						<p>
+							Chrome://flags<br>
+							- Prompt API for Gemini Nano
+							- Prompt API for Gemini Nano with Multimodal Input
+						</p>
+					</aside>
+				</section>
+				<section>
+					<h2>prompting voorbeeld</h2>
+					<pre><code class="javascript" data-trim data-line-numbers>
+					  <div class="r-stack">
+							const session = await LanguageModel.create();
+							const response = await session.prompt(
+							'kan je me uitleggen wat javascript is?'
+							)
+					  </div>
+					</code></pre>
+				</section>
+				<section>
+					<h2>summarize voorbeeld</h2>
+					<pre><code class="javascript" data-trim data-line-numbers>
+					  <div class="r-stack">
+						  // tweakers.nl artikel
+							const summarizer = await Summarizer.create({ type: 'headline', length: 'short'});
+							const tweakersNieuws = document.querySelector('.articleContent .article').textContent;
+							await summarizer.summarize(tweakersNieuws);
+					  </div>
+					</code></pre>
+				</section>
+				<section>
+					<h2>translator voorbeeld</h2>
+					<pre><code class="javascript" data-trim data-line-numbers>
+					  <div class="r-stack">
+						  // detect language
+							const languageDetector = await LanguageDetector.create();
+							const detectedLanguages = await languageDetector.detect('Dit is een test');
+							detectedLanguages[0];
+
+							// vertalen
+							const detectedLanguage = detectedLanguages[0].detectedLanguage;
+							const translator = await Translator.create({
+							sourceLanguage: detectedLanguage,
+							targetLanguage: 'en'
+							})
+
+							translation = await translator.translate('Dit is een test');
+					  </div>
+					</code></pre>
+				</section>
+				<section>
+					<h2>available?</h2>
+					<pre><code class="javascript" data-trim data-line-numbers>
+					  <div class="r-stack">
+							// availability
+							await LanguageModel.availability();
+							await Summarizer.availability();
+							await LanguageDetector.availability();
+							await Writer.availability();
+							await Rewriter.availability();
+							await Translator.availability();
+ 							// "unavailable", "downloadable", "downloading", "available"
+
+							https://www.youtube.com/watch?v=CjpZCWYrSxM&t=8s
+					  </div>
+					</code></pre>
+				</section>
 
 				<section>
 					<h2>Layout Helper Examples</h2>
