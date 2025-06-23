@@ -4,11 +4,12 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Developer meetup</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="css/reveal-quiz-dark-theme.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,11 +17,48 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+
 				<section data-background-iframe="/iframe.html">
-					<h2 style="color:black">Iframe background</h2>
+					<h2 style="color:black">JS-Nation   <img src="assets/img/jsNation-logo.svg" alt="logo js nation"  style="width:200px; height: auto; transform: rotate(-15deg)"/></h2>
 				</section>
-				<section data-background-iframe="https://youtube.com/embed/Jk7rliZpuSs?si=RCEnKrfThbsuqIDO">
-					<h2>Iframe background</h2>
+				<section data-background-iframe="/iframe.html">
+					<h2 style="color:black">State of dev meetup Quiz</h2>
+				</section>
+				<section  data-quiz data-background-iframe="/iframe.html">
+					# Over welk front-end framework zijn de gebruikers het meest tevreden?
+					- [ ] React
+					- [ ] Angular
+					- [ ] Mootools
+					- [x] Solid
+				</section>
+				<section  data-quiz data-background-iframe="/iframe.html">
+					# Wanneer was de laatste update van jQuery?
+					- [ ] 2014
+					- [ ] 2017
+					- [x] 2023
+					- [ ] 2025
+				</section>
+				<section  data-quiz data-background-iframe="/iframe.html">
+					# Volgens de state of js, hoeveel % van de devs schrijven op dit moment het merendeel van de code met AI
+					- [ ] 5%
+					- [x] 13%
+					- [ ] 48%
+					- [ ] 72%
+				</section>
+				<section  data-quiz data-background-iframe="/iframe.html">
+					# Wat is een nieuwe feature in css, de afgelopen jaar?
+					- [x] :has()
+					- [ ] float: right
+					- [ ] :focus-visible
+					- [ ] Text-wrap: pretty
+				</section>
+				<section  data-quiz data-background-iframe="/iframe.html">
+					# Wat is ouder Tijs Latiers of Cobol?
+					- [x] Cobol
+					- [ ] Tijs
+					- [ ] Ze zijn even oud
+					> Tijs is geboren in 1965, Cobol is ontwikkeld in 1959
+					> Tijs wordt volgende week wel 60! 🎉
 				</section>
 				<section data-background="#00ffff"><h2>data-background: #00ffff</h2> </section>
 				<section data-background="#00ffff"><h2>data-background: #00ffff</h2>
@@ -220,19 +258,20 @@
 
 		</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+		<script type="module">
+			import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
+			import markdown from './node_modules/reveal.js/plugin/markdown/markdown.esm.js';
+			import highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
+			import RevealNotes from './node_modules/reveal.js/plugin/notes/notes.esm.js';
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			import * as RevealQuiz from './node_modules/reveal-quiz/dist/reveal-quiz-bundle-esm.js';
+
+			Reveal.initialize({
+				quiz: {
+					useTimer: true,
+					defaultTimerDuration: 60,
+				},
+				plugins: [ RevealQuiz, markdown, highlight, RevealNotes ]
 			});
 		</script>
 	</body>

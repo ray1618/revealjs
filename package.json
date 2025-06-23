@@ -107,6 +107,8 @@
     }
   },
   "dependencies": {
-    "@microsoft/signalr": "^8.0.7"
+    "@microsoft/signalr": "^8.0.7",
+    "reveal-quiz": "^0.0.10",
+    "reveal.js": "^5.2.1"
   }
 }

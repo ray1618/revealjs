@@ -1,0 +1,35 @@
+.reveal h1 {
+    color: black;
+}
+.reveal-quiz-answer label{
+    border: 2px solid dodgerblue !important;
+    background: dodgerblue !important;
+}
+.reveal-quiz-answer input:checked + label {
+    background: rgba(30, 144, 255, 0.16) !important;
+}
+
+.reveal-quiz-answer.incorrect label {
+    background: indianred !important;
+    border: 2px solid red !important;
+}
+.reveal-quiz-answer.incorrect input:checked + label {
+    background: rgba(30, 144, 255, 0.16) !important;
+}
+.reveal-quiz-answer.correct label {
+    background: indianred !important;
+    border: 2px solid red !important;
+}
+
+.reveal-quiz-question form button {
+    font-weight: inherit;
+    font-size: var(--r-main-font-size);
+
+    align-self: flex-end;
+    margin: 1rem;
+    border: 2px solid dodgerblue !important;
+    border-radius: 4px !important;
+    background: white !important;
+    color: dodgerblue !important;
+    cursor: pointer;
+}
