@@ -14,7 +14,6 @@
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
 
-
 </head>
 <body>
 <div class="reveal">
@@ -37,7 +36,8 @@
 				<li>State of dev meetup Quiz</li>
 				<li>State of html / javascript / css</li>
 				<li>Transformers.js - Machine learning for the web</li>
-				<li>Google ai api & ai devtools?</li>
+				<li>Google ai api</li>
+				<li>SignalR</li>
 				<li>Links</li>
 			</ul>
 		</section>
@@ -150,25 +150,14 @@
 				</p>
 			</aside>
 		</section>
+
 		<!-- state of javascritp / html / css / deverlopers -->
 		<section  data-quiz data-background-iframe="/iframe.html">
 			<h1>State of html / javascript / css developers</h1>
-			<ul>
-				<li>test</li>
-			</ul>
-		</section>
-
-		<!-- state of css -->
-		<section data-background-iframe="/iframe.html">
-			<h2 style="color:black">State of css</h2>
-			<p>Relative colors</p>
-			<pre><code class="html" data-trim data-line-numbers>
-					  <div class="r-stack">
-					    &lt;img class="fragment" width="450" height="300" src="..."&gt;
-					    &lt;img class="fragment" width="300" height="450" src="..."&gt;
-					    &lt;img class="fragment" width="400" height="400" src="..."&gt;
-					  </div>
-					</code></pre>
+			<aside>
+				<p><a href="https://stateofjs.com/en-US">state of html</a></p>
+				<p><a href="https://2024.stateofjs.com/en-US/features/#string_features">results</a></p>
+			</aside>
 		</section>
 
 		<!-- transformers.js -->
@@ -196,8 +185,8 @@
 			<h2 style="color:black">Transformers.js DEMO</h2>
 			<aside class="notes">
 				<p>
-					Demo Doodledash & audio to transcription
-					$ z doodle-dash
+					Demo Doodledash & audio to transcription<br>
+					$ z doodle-dash<br>
 					$ z tranformerJsTest
 				</p>
 			</aside>
@@ -214,15 +203,14 @@
 			<aside class="notes">
 				<p>
 					Chrome://flags<br>
-					- Prompt API for Gemini Nano
-					- Prompt API for Gemini Nano with Multimodal Input
+					- Prompt API for Gemini Nano<br>
+					- Prompt API for Gemini Nano with Multimodal Input<br>
 
-					- Voordeel lokaal verwerken van je (gevoelige) data
-					- Niet afhankelijk van een externe server
+					- Voordeel lokaal verwerken van je (gevoelige) data<br>
+					- Niet afhankelijk van een externe server<br>
 
-					- Nadelen: minder krachtig dan de cloud variant, minder mogelijkheden, minder talen ondersteund.
+					- Nadelen: minder krachtig dan de cloud variant, minder mogelijkheden, minder talen ondersteund.<br>
 					- Alleen beschikbaar in Chrome
-
 				</p>
 			</aside>
 		</section>
@@ -275,20 +263,89 @@
 							await Rewriter.availability();
 							await Translator.availability();
  							// "unavailable", "downloadable", "downloading", "available"
-
-
 					</code></pre>
 		</section>
+
+		<!-- signalR -->
+		<section data-background-iframe="/iframe.html">
+			<h2>SignalR Back-end</h2>
+			<pre>
+				<code class="javascript" data-trim data-line-numbers>
+				<script type="text/template">
+				// Bac k-end
+				// api call naar
+				[HttpPost("send")]
+				public async Task (IActionResult) SendNotification([FromBody] NotificationRequest request)
+				{
+				var message = "vuurwerk!";
+				await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+				return Ok(new { Message = "Notification sent successfully" });
+				}
+				</script>
+				</code>
+			</pre>
+			<aside class="notes">
+				<p>
+					- Api endpoint ontvang request van btn
+					- connect met hub -> send message async
+				</p>
+			</aside>
+		</section>
+		<section data-background-iframe="/iframe.html">
+			<h2>SignalR Front-end</h2>
+			<pre><code class="javascript" data-trim data-line-numbers>
+				<script type="text/template">
+				// Front-end
+				const connection = new signalR.HubConnectionBuilder()
+				.withUrl("https://iwantfireworks.azurewebsites.net/notificationFireworkHub") // zorg dat dit klopt met je backend route
+				.configureLogging(signalR.LogLevel.Information)
+				.build();
+
+				// Luister naar een bericht van de server
+				connection.on('receivemessage', (msg)=>{
+				console.log('Bericht ontvangen van de server');
+				fireFirework();
+				})
+
+				// Verbind met de hub
+				connection.start().then(function () {
+				console.log("SignalR verbonden!");
+				}).catch(function (err) {
+				return console.error("Fout bij verbinden met SignalR:", err.toString());
+				});
+</script>
+					</code></pre>
+			<aside class="notes">
+				<p>
+					- Maak een connectie naar de hub (URL hangt af van je backend)
+					- Luister naar een bericht van de server
+					- Als er een bericht binnenkomt, dan wordt er een vuurwerk animatie gestart
+				</p>
+			</aside>
+		</section>
+
 
 		<!-- links -->
 		<section style="font-size: 1.25rem;" data-background-iframe="/iframe.html">
 			<h2 style="color:black">Links</h2>
 			<ul style s="margin-bottom: 1rem;">
+				https://developer.chrome.com/docs/extensions/ai/prompt-api
 				<li><a href="https://2024.stateofjs.com/en-US" target="_blank">State of JS 2024</a></li>
 				<li><a href="https://stateofcss.com/en-US" target="_blank">State of CSS 2025</a></li>
 				<li><a href="https://stateofhtml.com/en-US" target="_blank">State of HTML 2025</a></li>
+				<li><a href="https://revealjs.com/" target="_blank">Reveal.js</a></li>
 				<li><a href="https://gitnation.com/contents/transformersjs-state-of-the-art-machine-learning-for-the-web" target="_blank">huggingface.co (modellen / datasets voor transformers.js)</a></li>
+				<li><a href="https://developer.chrome.com/docs/extensions/ai/prompt-api" target="_blank">Chrome prompt api</a></li>
+				<li><a href="https://dotnet.microsoft.com/en-us/apps/aspnet/signalr" target="_blank">signalR microsoft</a></li>
+				<li><a href="https://www.npmjs.com/package/@microsoft/signalr" target="_blank">signalR.js</a></li>
 			</ul>
+			<aside class="notes">
+				<p>
+					- Presentatie gemaakt in reveal.js met de quiz plugin van reveal.js<br>
+					- Vuurwerk gevibecode met copilot
+					- Api met signalR connectie voor de push messages
+				</p>
+			</aside>
 		</section>
 
 		<section style="font-size: 1.25rem;" data-background-iframe="/iframe.html">
@@ -298,203 +355,13 @@
 				<li><a href="https://gitnation.com/contents/vite-and-the-future-of-javascript-tooling" target="_blank">Void(0) / Vite+ Talk (Evan You)</a> </li>
 				<li><a href="https://gitnation.com/contents/the-state-of-nodejs-2025" target="_blank">The state of NodeJs (Matteo Collina)</a> </li>
 				<li><a href="https://www.youtube.com/watch?v=CjpZCWYrSxM&t=8s" target="_blank">Ai In the browser With Chromes build-in Ai Apis (Thomas Steiner)</a></li>
-
 				<li><a href="https://gitnation.com/events/jsnation-2025" target="_blank">Alle Jsnation Amsterdam 2025 talks</a></li>
 			</ul>
 		</section>
 
-		<section data-background="#00ffff"><h2>data-background: #00ffff</h2> </section>
-		<section data-background="#00ffff"><h2>data-background: #00ffff</h2>
-			<iframe style="height:100%;width:100%;background:#fff;border:1px solid #aaa;" src="data:text/html,<html><body style='font-family:sans-serif;text-align:center;padding:2em;'>Loading presentation (ik ben een iframe)</body></html>"></iframe>
-		</section>
-		<section>Slide 2</section>
-		<section data-auto-animate data-auto-animate-unmatched="fade">
-			<h3>Auto-Animate Example</h3>
-			<p>This will fade out</p>
-			<img src="assets/image1.png" style="height: 100px;">
-			<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
-						function Example() {
-						  const [count, setCount] = useState(0);
-						}
-					</code></pre>
-		</section>
-		<section data-auto-animate data-auto-animate-unmatched="fade">
-			<h3>Auto-Animate Example</h3>
-			<p style="opacity: 0.2; margin-top: 100px;">This will fade out</p>
-			<p>This element is unmatched</p>
-			<img src="assets/image1.png" style="height: 150px;">
-			<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
-						function Example() {
-						  New line!
-						  const [count, setCount] = useState(0);
-						}
-					</code></pre>
-		</section>
-
-		<section data-auto-animate>
-			<p data-id="text-props" style="background: #555; line-height: 1em; letter-spacing: 0em;">Line Height & Letter Spacing</p>
-		</section>
-		<section data-auto-animate>
-			<p data-id="text-props" style="background: #555; line-height: 3em; letter-spacing: 0.2em;">Line Height & Letter Spacing</p>
-		</section>
-
-		<section>
-			<section data-auto-animate>
-						<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
-							import React, { useState } from 'react';
-
-							function Example() {
-							  const [count, setCount] = useState(0);
-
-							  return (
-							    ...
-							  );
-							}
-						</code></pre>
-			</section>
-			<section data-auto-animate>
-						<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
-							function Example() {
-							  const [count, setCount] = useState(0);
-
-							  return (
-							    &lt;div&gt;
-							      &lt;p&gt;You clicked {count} times&lt;/p&gt;
-							      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-							        Click me
-							      &lt;/button&gt;
-							    &lt;/div&gt;
-							  );
-							}
-						</code></pre>
-			</section>
-			<section data-auto-animate>
-						<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
-							function Example() {
-							  // A comment!
-							  const [count, setCount] = useState(0);
-
-							  return (
-							    &lt;div&gt;
-							      &lt;p&gt;You clicked {count} times&lt;/p&gt;
-							      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-							        Click me
-							      &lt;/button&gt;
-							    &lt;/div&gt;
-							  );
-							}
-						</code></pre>
-			</section>
-		</section>
-
-		<section>
-			<section data-auto-animate>
-				<h3>Swapping list items</h3>
-				<ul>
-					<li>One</li>
-					<li>Two</li>
-					<li>Three</li>
-				</ul>
-			</section>
-			<section data-auto-animate>
-				<h3>Swapping list items</h3>
-				<ul>
-					<li>Two</li>
-					<li>One</li>
-					<li>Three</li>
-				</ul>
-			</section>
-			<section data-auto-animate>
-				<h3>Swapping list items</h3>
-				<ul>
-					<li>Two</li>
-					<li>Three</li>
-					<li>One</li>
-				</ul>
-			</section>
-		</section>
-
-		<section data-auto-animate style="height: 600px">
-			<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 1</h3>
-			<h2 data-id="title" style="margin-top: 260px;">Animate Anything</h2>
-			<div data-id="1" style="background: white; position: absolute; top: 150px; left: 16%; width: 60px; height: 60px;"></div>
-			<div data-id="2" style="background: white; position: absolute; top: 150px; left: 36%; width: 60px; height: 60px;"></div>
-			<div data-id="3" style="background: white; position: absolute; top: 150px; left: 56%; width: 60px; height: 60px;"></div>
-			<div data-id="4" style="background: white; position: absolute; top: 150px; left: 76%; width: 60px; height: 60px;"></div>
-		</section>
-		<section data-auto-animate style="height: 600px">
-			<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 2</h3>
-			<h2 data-id="title" style="margin-top: 500px">With Auto Animate</h2>
-			<div data-id="1" style="background: cyan; position: absolute; bottom: 190px; left: 16%; width: 60px; height: 60px;"></div>
-			<div data-id="2" style="background: magenta; position: absolute; bottom: 190px; left: 36%; width: 60px; height: 160px;"></div>
-			<div data-id="3" style="background: yellow; position: absolute; bottom: 190px; left: 56%; width: 60px; height: 260px;"></div>
-			<div data-id="4" style="background: red; position: absolute; bottom: 190px; left: 76%; width: 60px; height: 360px;"></div>
-		</section>
-		<section data-auto-animate style="height: 600px">
-			<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 3</h3>
-			<h2 data-id="title" style="margin-top: 500px; opacity: 0;">With Auto Animate</h2>
-			<div data-id="1" style="background: cyan; position: absolute; top: 50%; left: 50%; width: 400px; height: 400px; margin: -200px 0 0 -200px; border-radius: 400px;"></div>
-			<div data-id="2" style="background: magenta; position: absolute; top: 50%; left: 50%; width: 300px; height: 300px; margin: -150px 0 0 -150px; border-radius: 400px;"></div>
-			<div data-id="3" style="background: yellow; position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin: -100px 0 0 -100px; border-radius: 400px;"></div>
-			<div data-id="4" style="background: red; position: absolute; top: 50%; left: 50%; width: 100px; height: 100px; margin: -50px 0 0 -50px; border-radius: 400px;"></div>
-		</section>
-		<section data-auto-animate style="height: 600px">
-			<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 3</h3>
-			<h2 data-id="title" style="margin-top: 500px; opacity: 0;">With Auto Animate</h2>
-			<div data-id="1" style="background: red; position: absolute; top: 250px; left: 16%; width: 60px; height: 60px;"></div>
-			<div data-id="2" style="background: yellow; position: absolute; top: 250px; left: 36%; width: 60px; height: 60px;"></div>
-			<div data-id="3" style="background: magenta; position: absolute; top: 250px; left: 56%; width: 60px; height: 60px;"></div>
-			<div data-id="4" style="background: cyan; position: absolute; top: 250px; left: 76%; width: 60px; height: 60px;"></div>
-		</section>
-
-		<section data-auto-animate data-auto-animate-id="a">
-			<h2>data-auto-animate-id="a"</h2>
-			<h3>A1</h3>
-		</section>
-		<section data-auto-animate data-auto-animate-id="a">
-			<h2>data-auto-animate-id="a"</h2>
-			<h3>A1</h3>
-			<h3>A2</h3>
-		</section>
-		<section data-auto-animate data-auto-animate-id="b">
-			<h2>data-auto-animate-id="b"</h2>
-			<h3>B1</h3>
-		</section>
-		<section data-auto-animate data-auto-animate-id="b">
-			<h2>data-auto-animate-id="b"</h2>
-			<h3>B1</h3>
-			<h3>B2</h3>
-		</section>
-
-		<section>
-			<section id="stacked-slide-1" data-auto-animate>
-				<a href="#/stacked-slide-1">Slide 1</a><br>
-				<a href="#/stacked-slide-2">Slide 2</a><br>
-				<a href="#/stacked-slide-3">Slide 3</a><br>
-				<a href="#/stacked-slide-4">Slide 4</a><br>
-				<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 0px;">A</div>
-			</section>
-			<section id="stacked-slide-2" data-auto-animate>
-				<a href="#/stacked-slide-1">Slide 1</a><br>
-				<a href="#/stacked-slide-2">Slide 2</a><br>
-				<a href="#/stacked-slide-3">Slide 3</a><br>
-				<a href="#/stacked-slide-4">Slide 4</a><br>
-				<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 25%;">A</div>
-			</section>
-			<section id="stacked-slide-3" data-auto-animate>
-				<a href="#/stacked-slide-1">Slide 1</a><br>
-				<a href="#/stacked-slide-2">Slide 2</a><br>
-				<a href="#/stacked-slide-3">Slide 3</a><br>
-				<a href="#/stacked-slide-4">Slide 4</a><br>
-				<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 50%;">A</div>
-			</section>
-			<section id="stacked-slide-4" data-auto-animate>
-				<a href="#/stacked-slide-1">Slide 1</a><br>
-				<a href="#/stacked-slide-2">Slide 2</a><br>
-				<a href="#/stacked-slide-3">Slide 3</a><br>
-				<a href="#/stacked-slide-4">Slide 4</a><br>
-				<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 75%;">A</div>
-			</section>
+		<section style="font-size: 1.25rem;" data-background-iframe="/iframe.html">
+			<h2 style="margin-top:1rem;">Vragen?</h2>
+			<img src="assets/img/vragen.png" style="width: 300px; height: auto; overflow: hidden; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); transform: rotate(-10deg)" alt="vragen" />
 		</section>
 
 	</div>
