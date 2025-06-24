@@ -111,7 +111,7 @@
 
         // Luister naar een bericht van de server
         connection.on('receivemessage', (msg)=>{
-            console.log('Bericht ontvangen van de server');
+            console.log('Bericht ontvangen van de server', msg);
             fireFirework();
         })
 
