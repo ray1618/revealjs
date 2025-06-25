@@ -141,22 +141,13 @@
 			- [ ] Tijs
 			- [ ] Ze zijn even oud
 			> Tijs is geboren in 1965, Cobol is ontwikkeld in 1959
-			> Tijs wordt komende week wel 60! 🎉
+			> Tijs wordt deze week wel 60! 🎉
 			<aside class="notes">
 				<p>
 					Js Nation, Amsterdam 12 juni<br>
 					Vergeet de Qr code niet ;)<br>
 					Open notes met S
 				</p>
-			</aside>
-		</section>
-
-		<!-- state of javascritp / html / css / deverlopers -->
-		<section  data-quiz data-background-iframe="/iframe.html">
-			<h1>State of html / javascript / css developers</h1>
-			<aside>
-				<p><a href="https://stateofjs.com/en-US">state of html</a></p>
-				<p><a href="https://2024.stateofjs.com/en-US/features/#string_features">results</a></p>
 			</aside>
 		</section>
 
@@ -173,11 +164,12 @@
 			</ul>
 			<aside class="notes">
 				<p>
-					- Transformers.js is een library waarmee je state-of-the-art machine learning modellen kunt gebruiken in de browser.
-					- Port van Transformers uit Python.
-					- Het maakt gebruik van WebAssembly, WebGPU om hoge prestaties te leveren, zelfs op mobiele apparaten.
-					- In NodeJs kun je het ook gebruiken (enkel CPU support).
-					- datasets en Modellen out of the box te gebruiken van huggingface.co, of je eigen modellen trainen en gebruiken.
+					- Transformers.js is een library waarmee je state-of-the-art machine learning modellen kunt gebruiken in de browser.<br>
+					- Port van Transformers uit Python.<br>
+					- Het maakt gebruik van WebAssembly, WebGPU om hoge prestaties te leveren, zelfs op mobiele apparaten.<br>
+					- In NodeJs kun je het ook gebruiken (enkel CPU support).<br>
+					- datasets en Modellen out of the box te gebruiken van huggingface.co, of je eigen modellen trainen en gebruiken.<br>
+					- ONNX modellen worden gebruikt.
 				</p>
 			</aside>
 		</section>
@@ -237,7 +229,6 @@
 		<section data-background-iframe="/iframe.html">
 			<h2>translator voorbeeld</h2>
 			<pre><code class="javascript" data-trim data-line-numbers>
-					  <div class="r-stack">
 						  // detect language
 							const languageDetector = await LanguageDetector.create();
 							const detectedLanguages = await languageDetector.detect('Dit is een test');
@@ -251,7 +242,6 @@
 							})
 
 							translation = await translator.translate('Dit is een test');
-					  </div>
 					</code></pre>
 		</section>
 		<section data-background-iframe="/iframe.html">
@@ -281,7 +271,6 @@
 			<pre>
 				<code class="javascript" data-trim data-line-numbers>
 				<script type="text/template">
-				// Bac k-end
 				// api call naar
 				[HttpPost("send")]
 				public async Task (IActionResult) SendNotification([FromBody] NotificationRequest request)
